@@ -268,6 +268,9 @@ export class News extends Component {
   constructor() {
     super();
     this.state = {
+      mode: "dark",
+      TextColour: "text-light",
+
       articles: this.articles,
       loading: false,
       page: 1,
@@ -279,7 +282,14 @@ export class News extends Component {
     let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=1&pageSize=18";
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, page: 1 });
+    this.setState({
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+      page: 1,
+      mode: "dark",
+      TextColour: "text-light",
+    });
+
     // console.log(this.state.totalResults);
   }
 
@@ -293,7 +303,7 @@ export class News extends Component {
       articles: parsedData.articles,
     });
 
-    console.log(Math.ceil(this.state.totalResults / 18), this.state.page);
+    // console.log(Math.ceil(this.state.totalResults / 18), this.state.page);
   };
 
   handlePreviousclick = async () => {

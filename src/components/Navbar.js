@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
 
-export class Navbar extends Component {
-  // static propTypes = {};
-
+export class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav className={`navbar navbar-expand-lg bg-${this.props.mode} navbar-${this.props.mode}`}>
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
               NewsApp
@@ -28,6 +25,13 @@ export class Navbar extends Component {
                   </a>
                 </li>
               </ul>
+            </div>
+
+            <div className="form-check form-switch">
+              <input className="form-check-input" onClick={this.props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                <strong className={`${this.props.TextColour}`}> {this.props.mode === "light" ? "Go Dark" : "Go Light"} </strong>
+              </label>
             </div>
           </div>
         </nav>
