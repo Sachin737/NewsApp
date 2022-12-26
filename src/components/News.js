@@ -268,9 +268,6 @@ export class News extends Component {
   constructor() {
     super();
     this.state = {
-      mode: "dark",
-      TextColour: "text-light",
-
       articles: this.articles,
       loading: false,
       page: 1,
@@ -286,31 +283,21 @@ export class News extends Component {
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
       page: 1,
-      mode: "dark",
-      TextColour: "text-light",
     });
-
-    // console.log(this.state.totalResults);
   }
 
   handleNextclick = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page + 1}&pageSize=18`;
     let parsedData = await (await fetch(url)).json();
-    // console.log(this.page + 1, parsedData);
-
     this.setState({
       page: this.state.page + 1,
       articles: parsedData.articles,
     });
-
-    // console.log(Math.ceil(this.state.totalResults / 18), this.state.page);
   };
 
   handlePreviousclick = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page - 1}&pageSize=18`;
     let parsedData = await (await fetch(url)).json();
-    // console.log(this.page - 1, parsedData);
-
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
@@ -320,7 +307,7 @@ export class News extends Component {
   render() {
     return (
       <div className="container my-5">
-        <h1>NewsApp - Top Headlines</h1>
+        <h1 className={this.props.TextColour}>NewsApp - Top Headlines</h1>
 
         <div className="row">
           {this.state.articles.map((ele) => {
@@ -335,10 +322,10 @@ export class News extends Component {
         </div>
 
         <div className="container d-flex justify-content-between my-5">
-          <button type="button" disabled={this.state.page <= 1} className="btn btn-dark mx-1" onClick={this.handlePreviousclick}>
+          <button type="button" disabled={this.state.page <= 1} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handlePreviousclick}>
             &larr; Previous
           </button>
-          <button type="button" disabled={this.state.page >= Math.ceil(this.state.totalResults / 18)} className="btn btn-dark mx-1" onClick={this.handleNextclick}>
+          <button type="button" disabled={this.state.page >= Math.ceil(this.state.totalResults / 18)} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handleNextclick}>
             Next &rarr;
           </button>
         </div>

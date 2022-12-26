@@ -12,9 +12,19 @@ export default class App extends Component {
       mode: "light",
       TextColour: "text-dark",
     };
+    document.body.style.backgroundColor = "rgb(183 183 183)";
+    document.title = "TextUtils - Light Mode";
   }
 
   toggleMode = () => {
+    if (this.state.mode === "light") {
+      document.body.style.backgroundColor = "rgb(11 22 38 / 87%)";
+      document.title = "TextUtils - Dark Mode";
+    } else {
+      document.body.style.backgroundColor = "rgb(183 183 183)";
+      document.title = "TextUtils - Light Mode";
+    }
+
     this.setState({
       mode: this.state.mode === "dark" ? "light" : "dark",
       TextColour: this.state.TextColour === "text-dark" ? "text-light" : "text-dark",
@@ -25,7 +35,7 @@ export default class App extends Component {
     return (
       <div>
         <Navbar TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode}></Navbar>
-        {/* <News></News> */}
+        <News TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode}></News>
       </div>
     );
   }
