@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 export class News extends Component {
   articles = [
@@ -276,56 +277,66 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=1&pageSize=18";
+    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=7185959c3a064bbbb832e553c79937df&page=1&pageSize=10";
+
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
       page: 1,
+      loading: false,
     });
   }
 
   handleNextclick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page + 1}&pageSize=18`;
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=7185959c3a064bbbb832e553c79937df&page=${this.state.page + 1}&pageSize=10`;
+
+    this.setState({ loading: true });
     let parsedData = await (await fetch(url)).json();
     this.setState({
       page: this.state.page + 1,
       articles: parsedData.articles,
+      loading: false,
     });
   };
 
   handlePreviousclick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page - 1}&pageSize=18`;
+    window.scrollTo(0, 0, "smooth");
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=7185959c3a064bbbb832e553c79937df&page=${this.state.page - 1}&pageSize=10`;
+
+    this.setState({ loading: true });
     let parsedData = await (await fetch(url)).json();
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
+      loading: false,
     });
   };
 
   render() {
     return (
       <div className="container my-5">
-        <h1 className={this.props.TextColour}>NewsApp - Top Headlines</h1>
+        {!this.state.loading && <h1 className={`${this.props.TextColour} text-center`}>NewsApp - Top Headlines</h1>}
+        {this.state.loading && <Spinner />}
 
         <div className="row">
-          {this.state.articles.map((ele) => {
-            if (ele.urlToImage != null) {
+          {!this.state.loading &&
+            this.state.articles.map((ele) => {
               return (
                 <div className="col-md-4" key={ele.url}>
-                  <NewsItem title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(80, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : ""} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
+                  <NewsItem title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(80, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
                 </div>
               );
-            }
-          })}
+            })}
         </div>
 
         <div className="container d-flex justify-content-between my-5">
           <button type="button" disabled={this.state.page <= 1} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handlePreviousclick}>
             &larr; Previous
           </button>
-          <button type="button" disabled={this.state.page >= Math.ceil(this.state.totalResults / 18)} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handleNextclick}>
+          <button type="button" disabled={this.state.page >= Math.ceil((this.state.totalResults - 5) / 10)} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handleNextclick}>
             Next &rarr;
           </button>
         </div>

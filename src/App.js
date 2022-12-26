@@ -3,7 +3,6 @@ import "./App.css";
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
-import { useState } from "react";
 
 export default class App extends Component {
   constructor() {
@@ -12,7 +11,7 @@ export default class App extends Component {
       mode: "light",
       TextColour: "text-dark",
     };
-    document.body.style.backgroundColor = "rgb(183 183 183)";
+    document.body.style.backgroundColor = "rgb(161 161 161 / 49%)";
     document.title = "TextUtils - Light Mode";
   }
 
@@ -21,7 +20,7 @@ export default class App extends Component {
       document.body.style.backgroundColor = "rgb(11 22 38 / 87%)";
       document.title = "TextUtils - Dark Mode";
     } else {
-      document.body.style.backgroundColor = "rgb(183 183 183)";
+      document.body.style.backgroundColor = "rgb(161 161 161 / 49%)";
       document.title = "TextUtils - Light Mode";
     }
 
