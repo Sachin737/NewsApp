@@ -13,16 +13,13 @@ export default class App extends Component {
       TextColour: "text-dark",
     };
     document.body.style.backgroundColor = "rgb(227 227 227 / 49%)";
-    document.title = "TextUtils - Light Mode";
   }
 
   toggleMode = () => {
     if (this.state.mode === "light") {
-      document.body.style.backgroundColor = "rgb(11 22 38 / 87%)";
-      document.title = "TextUtils - Dark Mode";
+      document.body.style.backgroundColor = "rgb(17 20 22)";
     } else {
       document.body.style.backgroundColor = "rgb(227 227 227 / 49%)";
-      document.title = "TextUtils - Light Mode";
     }
 
     this.setState({

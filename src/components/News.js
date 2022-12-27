@@ -30,77 +30,70 @@ export class News extends Component {
     category: PropTypes.string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: this.articles,
       loading: false,
       page: 1,
       totalResults: 1,
     };
+    document.title = `NewsApp |     ${this.props.category[0].toUpperCase()}${this.props.category.slice(1)}`;
+  }
+
+  scrollUp = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  async UpdatePage() {
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page}&pageSize=12`;
+
+    this.setState({ loading: true });
+    let parsedData = await (await fetch(url)).json();
+    this.setState({
+      totalResults: parsedData.totalResults,
+      articles: parsedData.articles,
+      loading: false,
+    });
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d46ef1e41f774954bdb3578802e79777&page=1&pageSize=12`;
-
-    // console.log(url);
-
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({
-      articles: parsedData.articles,
-      totalResults: parsedData.totalResults,
-      page: 1,
-      loading: false,
-    });
+    this.UpdatePage();
   }
 
   handleNextclick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page + 1}&pageSize=12`;
-
-    this.setState({ loading: true });
-    let parsedData = await (await fetch(url)).json();
-    this.setState({
-      page: this.state.page + 1,
-      articles: parsedData.articles,
-      loading: false,
-    });
+    this.setState({ page: this.state.page + 1 });
+    this.UpdatePage();
   };
 
   handlePreviousclick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page - 1}&pageSize=12`;
-
-    this.setState({ loading: true });
-    let parsedData = await (await fetch(url)).json();
-    this.setState({
-      page: this.state.page - 1,
-      articles: parsedData.articles,
-      loading: false,
-    });
+    this.setState({ page: this.state.page - 1 });
+    this.UpdatePage();
   };
 
   render() {
     return (
       <div className="container my-5">
-        {!this.state.loading && <h1 className={`${this.props.TextColour} text-center`}>NewsApp - Top Headlines</h1>}
+        {!this.state.loading && <h1 className={`${this.props.TextColour} text-center`}>NewsApp - Top {this.props.category[0].toUpperCase() + this.props.category.slice(1)} Headlines</h1>}
         {this.state.loading && <Spinner />}
 
+        <br />
         <div className="row">
           {!this.state.loading &&
             this.state.articles.map((ele) => {
               return (
                 <div className="col-md-4" key={ele.url}>
-                  <NewsItem author={ele.author === null ? "Unknown" : ele.author.slice(0, 4) === "http" ? new URL(ele.author).pathname.slice(1) : ele.author} publishedAt={new Date(ele.publishedAt).toGMTString()} title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(80, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
+                  <NewsItem mode={this.props.mode} TextColour={this.props.TextColour} source={ele.source.name} author={ele.author === null ? "Unknown" : ele.author.slice(0, 4) === "http" ? new URL(ele.author).pathname.slice(1) : ele.author} publishedAt={new Date(ele.publishedAt).toGMTString()} title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(120, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
                 </div>
               );
             })}
         </div>
 
-        <div className="container d-flex justify-content-between my-5">
+        <div className="container d-flex justify-content-around my-5">
           <button type="button" disabled={this.state.page <= 1} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handlePreviousclick}>
             &larr; Previous
           </button>
+
           <button type="button" disabled={this.state.page >= Math.ceil(this.state.totalResults / 12)} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handleNextclick}>
             Next &rarr;
           </button>
