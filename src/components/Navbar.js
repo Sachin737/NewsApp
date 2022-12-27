@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export class Navbar extends React.Component {
   render() {
@@ -19,19 +20,56 @@ export class Navbar extends React.Component {
                     Home
                   </a>
                 </li>
+
                 <li className="nav-item">
-                  <a className="nav-link" href="/about">
-                    About
-                  </a>
+                  <Link to="/business" className="nav-link">
+                    Business
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/entertainment" className="nav-link">
+                    Entertainment
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/general" className="nav-link">
+                    General
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/health" className="nav-link">
+                    Health
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/science" className="nav-link">
+                    Science
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/sports" className="nav-link">
+                    Sports
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to="/technology" className="nav-link">
+                    Technology
+                  </Link>
                 </li>
               </ul>
-            </div>
 
-            <div className="form-check form-switch">
-              <input className="form-check-input" onClick={this.props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-              <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                <strong className={`${this.props.TextColour}`}> {this.props.mode === "light" ? "Go Dark" : "Go Light"} </strong>
-              </label>
+              <div className="form-check form-switch">
+                <input className="form-check-input" onClick={this.props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                  <strong className={`${this.props.TextColour}`}> {this.props.mode === "light" ? "Go Dark" : "Go Light"} </strong>
+                </label>
+              </div>
             </div>
           </div>
         </nav>
