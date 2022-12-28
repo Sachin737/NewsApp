@@ -36,6 +36,8 @@ export default class App extends Component {
     });
   };
 
+  apiKey = process.env.REACT_APP_NEWS_API;
+
   render() {
     return (
       <Router>
@@ -45,14 +47,14 @@ export default class App extends Component {
           <Navbar TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode}></Navbar>
 
           <Routes>
-            <Route exact path="/" element={<News setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/business" element={<News setProgress={this.setProgress} key="business" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="business"></News>} />
-            <Route exact path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="entertainment"></News>} />
-            <Route exact path="/general" element={<News setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/health" element={<News setProgress={this.setProgress} key="health" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="health"></News>} />
-            <Route exact path="/science" element={<News setProgress={this.setProgress} key="science" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="science"></News>} />
-            <Route exact path="/sports" element={<News setProgress={this.setProgress} key="sports" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="sports"></News>} />
-            <Route exact path="/technology" element={<News setProgress={this.setProgress} key="technology" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="technology"></News>} />
+            <Route exact path="/" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
+            <Route exact path="/business" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="business" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="business"></News>} />
+            <Route exact path="/entertainment" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="entertainment" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="entertainment"></News>} />
+            <Route exact path="/general" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
+            <Route exact path="/health" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="health" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="health"></News>} />
+            <Route exact path="/science" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="science" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="science"></News>} />
+            <Route exact path="/sports" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="sports" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="sports"></News>} />
+            <Route exact path="/technology" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="technology" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="technology"></News>} />
           </Routes>
         </div>
       </Router>

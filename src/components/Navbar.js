@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export class Navbar extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{ position: "sticky", width: "100%", top: "0", zIndex: "1" }}>
         <nav className={`navbar navbar-expand-lg bg-${this.props.mode === "dark" ? "light" : "dark"} navbar-${this.props.mode === "dark" ? "light" : "dark"} text-${this.props.mode === "dark" ? "dark" : "light"}`}>
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
