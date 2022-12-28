@@ -5,10 +5,17 @@ export class NewsItem extends Component {
     let { title, description, imgUrl, newsUrl, author, publishedAt, source, mode, TextColour } = this.props;
 
     return (
-      <div className={`my-3 card bg-${mode === "dark" ? "dark" : "light"} text-${TextColour === "text-dark" ? "dark" : "light"} `}>
-        <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{ zIndex: 1, left: "90%" }}>
-          {source}
-        </span>
+      <div className={`my-5 card bg-${mode === "dark" ? "dark" : "light"} text-${TextColour === "text-dark" ? "dark" : "light"} `}>
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "flex-end",
+            right: "0",
+          }}
+        >
+          <span className="badge rounded-pill bg-danger">{source}</span>
+        </div>
 
         <img src={imgUrl} className="card-img-top" alt="..." />
         <div className="card-body">

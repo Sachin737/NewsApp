@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 import { PropTypes } from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export class News extends Component {
   articles = [
@@ -34,7 +35,7 @@ export class News extends Component {
     super(props);
     this.state = {
       articles: this.articles,
-      loading: false,
+      loading: true,
       page: 1,
       totalResults: 1,
     };
@@ -46,50 +47,74 @@ export class News extends Component {
   };
 
   async UpdatePage() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d46ef1e41f774954bdb3578802e79777&page=${this.state.page}&pageSize=12`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=7185959c3a064bbbb832e553c79937df&page=${this.state.page}&pageSize=12`;
 
-    this.setState({ loading: true });
-    let parsedData = await (await fetch(url)).json();
+    this.props.setProgress(10);
+    let data = await fetch(url);
+
+    this.props.setProgress(40);
+    let parsedData = await data.json();
+
+    this.props.setProgress(70);
     this.setState({
       totalResults: parsedData.totalResults,
       articles: parsedData.articles,
       loading: false,
     });
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {
     this.UpdatePage();
   }
 
-  handleNextclick = async () => {
+  fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
-    this.UpdatePage();
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=7185959c3a064bbbb832e553c79937df&page=${this.state.page}&pageSize=12`;
+
+    let parsedData = await (await fetch(url)).json();
+    this.setState({
+      totalResults: parsedData.totalResults,
+      articles: this.state.articles.concat(parsedData.articles),
+    });
   };
 
-  handlePreviousclick = async () => {
-    this.setState({ page: this.state.page - 1 });
-    this.UpdatePage();
-  };
+  // handleNextclick = async () => {
+  //   this.setState({ page: this.state.page + 1 });
+  //   this.UpdatePage();
+  // };
+
+  // handlePreviousclick = async () => {
+  //   this.setState({ page: this.state.page - 1 });
+  //   this.UpdatePage();
+  // };
 
   render() {
     return (
-      <div className="container my-5">
-        {!this.state.loading && <h1 className={`${this.props.TextColour} text-center`}>NewsApp - Top {this.props.category[0].toUpperCase() + this.props.category.slice(1)} Headlines</h1>}
-        {this.state.loading && <Spinner />}
+      <>
+        {<h1 className={`${this.props.TextColour} text-center mt-5`}>NewsApp - Top {this.props.category[0].toUpperCase() + this.props.category.slice(1)} Headlines</h1>}
 
         <br />
-        <div className="row">
-          {!this.state.loading &&
-            this.state.articles.map((ele) => {
-              return (
-                <div className="col-md-4" key={ele.url}>
-                  <NewsItem mode={this.props.mode} TextColour={this.props.TextColour} source={ele.source.name} author={ele.author === null ? "Unknown" : ele.author.slice(0, 4) === "http" ? new URL(ele.author).pathname.slice(1) : ele.author} publishedAt={new Date(ele.publishedAt).toGMTString()} title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(120, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
-                </div>
-              );
-            })}
-        </div>
 
-        <div className="container d-flex justify-content-around my-5">
+        {this.state.loading && <Spinner mode={this.props.mode} />}
+        <InfiniteScroll dataLength={this.state.articles.length} next={this.fetchMoreData} hasMore={this.state.articles.length !== this.state.totalResults} loader={<Spinner mode={this.props.mode} />}>
+          {!this.state.loading && (
+            <div className="container">
+              <div className="row">
+                {/* {console.log(this.state.articles.length !== this.state.totalResults)} */}
+                {this.state.articles.map((ele) => {
+                  return (
+                    <div className="col-md-4" key={ele.url}>
+                      <NewsItem mode={this.props.mode} TextColour={this.props.TextColour} source={ele.source.name} author={ele.author === null ? "Unknown" : ele.author.slice(0, 4) === "http" ? new URL(ele.author).pathname.slice(1) : ele.author} publishedAt={new Date(ele.publishedAt).toGMTString()} title={ele.title !== null ? ele.title : "Title not available"} description={ele.description !== null && ele.description.length ? ele.description.slice(0, Math.min(120, ele.description.length)) : "No description available"} imgUrl={ele.urlToImage !== null ? ele.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"} newsUrl={ele.url !== null ? ele.url : "/"}></NewsItem>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </InfiniteScroll>
+
+        {/* <div className="container d-flex justify-content-around my-5">
           <button type="button" disabled={this.state.page <= 1} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handlePreviousclick}>
             &larr; Previous
           </button>
@@ -97,8 +122,8 @@ export class News extends Component {
           <button type="button" disabled={this.state.page >= Math.ceil(this.state.totalResults / 12)} className={`btn btn-${this.props.mode === "light" ? "dark" : "light"} mx-1`} onClick={this.handleNextclick}>
             Next &rarr;
           </button>
-        </div>
-      </div>
+        </div> */}
+      </>
     );
   }
 }

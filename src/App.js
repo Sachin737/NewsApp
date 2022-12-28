@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 export default class App extends Component {
   constructor() {
@@ -11,6 +12,7 @@ export default class App extends Component {
     this.state = {
       mode: "light",
       TextColour: "text-dark",
+      progress: 0,
     };
     document.body.style.backgroundColor = "rgb(227 227 227 / 49%)";
   }
@@ -28,21 +30,29 @@ export default class App extends Component {
     });
   };
 
+  setProgress = (progress) => {
+    this.setState({
+      progress: progress,
+    });
+  };
+
   render() {
     return (
       <Router>
         <div>
+          <LoadingBar height={3} color="#f11946" progress={this.state.progress} />
+
           <Navbar TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode}></Navbar>
 
           <Routes>
-            <Route exact path="/" element={<News key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/business" element={<News key="business" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="business"></News>} />
-            <Route exact path="/entertainment" element={<News key="entertainment" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="entertainment"></News>} />
-            <Route exact path="/general" element={<News key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/health" element={<News key="health" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="health"></News>} />
-            <Route exact path="/science" element={<News key="science" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="science"></News>} />
-            <Route exact path="/sports" element={<News key="sports" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="sports"></News>} />
-            <Route exact path="/technology" element={<News key="technology" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="technology"></News>} />
+            <Route exact path="/" element={<News setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
+            <Route exact path="/business" element={<News setProgress={this.setProgress} key="business" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="business"></News>} />
+            <Route exact path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="entertainment"></News>} />
+            <Route exact path="/general" element={<News setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
+            <Route exact path="/health" element={<News setProgress={this.setProgress} key="health" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="health"></News>} />
+            <Route exact path="/science" element={<News setProgress={this.setProgress} key="science" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="science"></News>} />
+            <Route exact path="/sports" element={<News setProgress={this.setProgress} key="sports" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="sports"></News>} />
+            <Route exact path="/technology" element={<News setProgress={this.setProgress} key="technology" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="technology"></News>} />
           </Routes>
         </div>
       </Router>
