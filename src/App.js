@@ -1,63 +1,49 @@
 import "./App.css";
 
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      mode: "light",
-      TextColour: "text-dark",
-      progress: 0,
-    };
-    document.body.style.backgroundColor = "rgb(227 227 227 / 49%)";
-  }
+const App = () => {
+  const [mode, Setmode] = useState("light");
+  const [TextColour, setTextColour] = useState("text-dark");
+  const [progress, setProgress] = useState(0);
 
-  toggleMode = () => {
-    if (this.state.mode === "light") {
+  const toggleMode = () => {
+    if (mode === "light") {
       document.body.style.backgroundColor = "rgb(17 20 22)";
     } else {
       document.body.style.backgroundColor = "rgb(227 227 227 / 49%)";
     }
 
-    this.setState({
-      mode: this.state.mode === "dark" ? "light" : "dark",
-      TextColour: this.state.TextColour === "text-dark" ? "text-light" : "text-dark",
-    });
+    Setmode(mode === "dark" ? "light" : "dark");
+    setTextColour(TextColour === "text-dark" ? "text-light" : "text-dark");
   };
 
-  setProgress = (progress) => {
-    this.setState({
-      progress: progress,
-    });
-  };
+  const apiKey = process.env.REACT_APP_NEWS_API;
 
-  apiKey = process.env.REACT_APP_NEWS_API;
+  return (
+    <Router>
+      <div>
+        <LoadingBar height={3} color="#f11946" progress={progress} />
 
-  render() {
-    return (
-      <Router>
-        <div>
-          <LoadingBar height={3} color="#f11946" progress={this.state.progress} />
+        <Navbar TextColour={TextColour} mode={mode} toggleMode={toggleMode}></Navbar>
 
-          <Navbar TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode}></Navbar>
+        <Routes>
+          <Route exact path="/" element={<News apiKey={apiKey} setProgress={setProgress} key="general" TextColour={TextColour} mode={mode} category="general"></News>} />
+          <Route exact path="/business" element={<News apiKey={apiKey} setProgress={setProgress} key="business" TextColour={TextColour} mode={mode} category="business"></News>} />
+          <Route exact path="/entertainment" element={<News apiKey={apiKey} setProgress={setProgress} key="entertainment" TextColour={TextColour} mode={mode} category="entertainment"></News>} />
+          <Route exact path="/general" element={<News apiKey={apiKey} setProgress={setProgress} key="general" TextColour={TextColour} mode={mode} category="general"></News>} />
+          <Route exact path="/health" element={<News apiKey={apiKey} setProgress={setProgress} key="health" TextColour={TextColour} mode={mode} category="health"></News>} />
+          <Route exact path="/science" element={<News apiKey={apiKey} setProgress={setProgress} key="science" TextColour={TextColour} mode={mode} category="science"></News>} />
+          <Route exact path="/sports" element={<News apiKey={apiKey} setProgress={setProgress} key="sports" TextColour={TextColour} mode={mode} category="sports"></News>} />
+          <Route exact path="/technology" element={<News apiKey={apiKey} setProgress={setProgress} key="technology" TextColour={TextColour} mode={mode} category="technology"></News>} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-          <Routes>
-            <Route exact path="/" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/business" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="business" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="business"></News>} />
-            <Route exact path="/entertainment" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="entertainment" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="entertainment"></News>} />
-            <Route exact path="/general" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="general" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="general"></News>} />
-            <Route exact path="/health" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="health" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="health"></News>} />
-            <Route exact path="/science" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="science" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="science"></News>} />
-            <Route exact path="/sports" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="sports" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="sports"></News>} />
-            <Route exact path="/technology" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="technology" TextColour={this.state.TextColour} mode={this.state.mode} toggleMode={this.toggleMode} category="technology"></News>} />
-          </Routes>
-        </div>
-      </Router>
-    );
-  }
-}
+export default App;

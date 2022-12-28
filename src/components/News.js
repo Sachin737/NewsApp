@@ -5,8 +5,6 @@ import { PropTypes } from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const News = (props) => {
-  // document.title = `NewsApp |     ${props.category[0].toUpperCase()}${props.category.slice(1)}`;
-
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setpage] = useState(1);
@@ -14,6 +12,8 @@ const News = (props) => {
 
   const UpdatePage = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=12`;
+
+    document.title = `NewsApp |     ${props.category[0].toUpperCase()}${props.category.slice(1)}`;
 
     props.setProgress(10);
     let data = await fetch(url);
@@ -35,9 +35,8 @@ const News = (props) => {
   }, []);
 
   const fetchMoreData = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=12`;
     setpage(page + 1);
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=12`;
-
     let parsedData = await (await fetch(url)).json();
 
     setArticles(articles.concat(parsedData.articles));
@@ -46,7 +45,11 @@ const News = (props) => {
 
   return (
     <>
-      {<h1 className={`${props.TextColour} text-center mt-5`}>NewsApp - Top {props.category[0].toUpperCase() + props.category.slice(1)} Headlines</h1>}
+      {
+        <h1 className={`${props.TextColour} text-center`} style={{ margin: "7rem 0 0 0" }}>
+          NewsApp - Top {props.category[0].toUpperCase() + props.category.slice(1)} Headlines
+        </h1>
+      }
 
       <br />
 

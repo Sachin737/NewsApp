@@ -4,7 +4,7 @@ const NewsItem = (props) => {
   let { title, description, imgUrl, newsUrl, author, publishedAt, source, mode, TextColour } = props;
 
   return (
-    <div className={`my-5 card bg-${mode === "dark" ? "dark" : "light"} text-${TextColour === "text-dark" ? "dark" : "light"} `}>
+    <div className={`my-3 card bg-${mode === "dark" ? "dark" : "light"} text-${TextColour === "text-dark" ? "dark" : "light"} `}>
       <div
         style={{
           position: "absolute",
