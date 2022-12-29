@@ -93,8 +93,8 @@ News.defaultProps = {
 };
 
 News.propTypes = {
-  country: PropTypes.string,
-  category: PropTypes.string,
+  country: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default News;
