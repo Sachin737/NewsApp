@@ -5,7 +5,27 @@ import { PropTypes } from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const News = (props) => {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([
+    {
+      status: "ok",
+      totalResults: 70,
+      articles: [
+        {
+          source: {
+            id: null,
+            name: "Investing.com",
+          },
+          author: "Reuters",
+          title: "Oil prices fall on worries about China COVID surge, global recession By Reuters - Investing.com",
+          description: "Oil prices fall on worries about China COVID surge, global recession",
+          url: "https://www.investing.com/news/commodities-news/oil-prices-rise-on-hopes-for-china-demand-boost-2970567",
+          urlToImage: "https://i-invdn-com.investing.com/news/LYNXNPEB8604B_L.jpg",
+          publishedAt: "2022-12-28T09:25:00Z",
+          content: "By Dmitry Zhdannikov and Isabel Kua\r\nLONDON (Reuters) -Oil prices fell on Wednesday on concerns that rising COVID-19 cases in China, the world's top oil importer, will disrupt its economic recovery a… [+1829 chars]",
+        },
+      ],
+    },
+  ]);
   const [loading, setLoading] = useState(true);
   const [page, setpage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
