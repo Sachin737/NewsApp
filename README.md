@@ -1,4 +1,4 @@
-This site is created using ReactJS and NewsAPI is used to fetch news of different categories.
+<h1>This site is created using ReactJS and NewsAPI is used to fetch news of different categories.</h1>
 
 ![Screenshot from 2023-01-05 18-40-35](https://user-images.githubusercontent.com/89219332/210788741-2eab206a-1fe2-45b0-8af4-52a847e753d1.png)
 
@@ -9,3 +9,4 @@ It also have a button to toggle between dark and light mode:
 News Card:
 
 ![Screenshot from 2023-01-05 18-41-09](https://user-images.githubusercontent.com/89219332/210788610-c44c324b-d9dc-4622-aea2-44ff212736b6.png)
+
