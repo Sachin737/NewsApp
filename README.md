@@ -1,6 +1,6 @@
 This site is created using ReactJS and NewsAPI is used to fetch news of different categories.
 
-![Screenshot from 2023-01-05 18-40-33](https://user-images.githubusercontent.com/89219332/210788229-0a8187ca-0cdf-4041-9ede-f883b951ec92.png)
+![Screenshot from 2023-01-05 18-40-35](https://user-images.githubusercontent.com/89219332/210788741-2eab206a-1fe2-45b0-8af4-52a847e753d1.png)
 
 It also have a button to toggle between dark and light mode:
 
