@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
+require("dotenv").config();
 
 const App = () => {
   const [mode, Setmode] = useState("light");
@@ -23,7 +24,6 @@ const App = () => {
   };
 
   const apiKey = process.env.REACT_APP_NEWS_API;
-
   return (
     <Router>
       <div>
