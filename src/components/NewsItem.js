@@ -1,10 +1,24 @@
 import React from "react";
 
 const NewsItem = (props) => {
-  let { title, description, imgUrl, newsUrl, author, publishedAt, source, mode, TextColour } = props;
+  let {
+    title,
+    description,
+    imgUrl,
+    newsUrl,
+    author,
+    publishedAt,
+    source,
+    mode,
+    TextColour,
+  } = props;
 
   return (
-    <div className={`my-3 card bg-${mode === "dark" ? "dark" : "light"} text-${TextColour === "text-dark" ? "dark" : "light"} `}>
+    <div
+      className={`my-3 card bg-${mode === "dark" ? "dark" : "light"} text-${
+        TextColour === "text-dark" ? "dark" : "light"
+      } `}
+    >
       <div
         style={{
           position: "absolute",
@@ -21,11 +35,18 @@ const NewsItem = (props) => {
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}...</p>
         <p className="cart-text">
-          <small className={`text-${mode === "light" ? "success" : "white-50"}`}>
+          <small
+            className={`text-${mode === "light" ? "success" : "white-50"}`}
+          >
             {author} | {publishedAt}
           </small>
         </p>
-        <a href={newsUrl} rel="noreferrer" target="_blank" className={`btn btn-${mode === "dark" ? "light" : "dark"} btn-sm`}>
+        <a
+          href={newsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`btn btn-${mode === "dark" ? "light" : "dark"} btn-sm`}
+        >
           Read more
         </a>
       </div>

@@ -4,12 +4,27 @@ import { Link } from "react-router-dom";
 const Navbar = (props) => {
   return (
     <div>
-      <nav style={{ opacity: "85%" }} className={`fixed-top navbar navbar-expand-lg bg-${props.mode === "dark" ? "light" : "dark"} navbar-${props.mode === "dark" ? "light" : "dark"} text-${props.mode === "dark" ? "dark" : "light"}`}>
+      <nav
+        style={{ opacity: "85%" }}
+        className={`fixed-top navbar navbar-expand-lg bg-${
+          props.mode === "dark" ? "light" : "dark"
+        } navbar-${props.mode === "dark" ? "light" : "dark"} text-${
+          props.mode === "dark" ? "dark" : "light"
+        }`}
+      >
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             NewsApp
           </Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -64,9 +79,26 @@ const Navbar = (props) => {
             </ul>
 
             <div className="form-check form-switch">
-              <input className="form-check-input" onClick={props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-              <label className="form-check-label" htmlFor="flexSwitchCheckDefault" role={"switch"}>
-                <strong className={`${props.mode === "dark" ? "dark" : "light"}`}> {props.mode === "light" ? "Go Dark" : "Go Light"} </strong>
+              <input
+                className="form-check-input"
+                onClick={props.toggleMode}
+                type="checkbox"
+                role="switch"
+                aria-checked
+                id="flexSwitchCheckDefault"
+              />
+              <label
+                className="form-check-label"
+                htmlFor="flexSwitchCheckDefault"
+                role={"switch"}
+                aria-checked
+              >
+                <strong
+                  className={`${props.mode === "dark" ? "dark" : "light"}`}
+                >
+                  {" "}
+                  {props.mode === "light" ? "Go Dark" : "Go Light"}{" "}
+                </strong>
               </label>
             </div>
           </div>
